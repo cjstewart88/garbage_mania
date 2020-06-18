@@ -2,7 +2,11 @@ import { Game } from './game';
 
 export class Player {
   public currentPosition: { x: number, y: number } = { x: 0, y: 0 };
+  public direction: 'up' | 'down' | 'left' | 'right' = 'right';
+  public tick = true;
   public garbageCollected = 0;
+  public lastMove = (new Date).getTime();
+  public delay = 100;
 
   private game: Game;
 
@@ -12,29 +16,37 @@ export class Player {
   }
 
   private handleInput(event: KeyboardEvent) {
+    const now = (new Date).getTime();
+    if (now - this.lastMove < this.delay) {
+      return;
+    }
+    this.lastMove = now;
+
+    this.tick = !this.tick;
+
     switch(event.keyCode) {
       case 38:
-        //up
-        if (this.currentPosition.y - 16 >= 0) {
-          this.currentPosition.y -= 16;
+        this.direction = 'up';
+        if (this.currentPosition.y - 32 >= 0) {
+          this.currentPosition.y -= 32;
         }
         break;
       case 39:
-        //right
-        if (this.currentPosition.x + 16 < 800) {
-          this.currentPosition.x += 16;
+        this.direction = 'right';
+        if (this.currentPosition.x + 32 < 800) {
+          this.currentPosition.x += 32;
         }
         break;
       case 40:
-        // down
-        if (this.currentPosition.y + 16 < 640) {
-          this.currentPosition.y += 16;
+        this.direction = 'down';
+        if (this.currentPosition.y + 32 < 640) {
+          this.currentPosition.y += 32;
         }
         break;
       case 37:
-        // left
-        if (this.currentPosition.x - 16 >= 0) {
-          this.currentPosition.x -= 16;
+        this.direction = 'left';
+        if (this.currentPosition.x - 32 >= 0) {
+          this.currentPosition.x -= 32;
         }
         break;
       case 32:

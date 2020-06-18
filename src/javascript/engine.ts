@@ -68,8 +68,9 @@ export class Engine {
         }
       });
     });
-
-    this.ctx.fillStyle = 'red';
-    this.ctx.fillRect(this.player.currentPosition.x, this.player.currentPosition.y, 16, 16);
+    
+    this.ctx.drawImage(this.imgs.garbageTruck.element,  0, this.imgs.garbageTruck.version[this.player.direction], 32, 32, this.player.currentPosition.x, this.player.currentPosition.y, 32, 32)
+    // this.ctx.fillStyle = 'red';
+    // this.ctx.fillRect(this.player.currentPosition.x, this.player.currentPosition.y, 32, 32);
   }
 }
